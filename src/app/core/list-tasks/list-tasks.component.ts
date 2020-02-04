@@ -12,11 +12,14 @@ export class ListTasksComponent implements OnInit {
   public tasks: Task[];
 
   @Output()
-  public remove: EventEmitter<string | number>
+  public remove: EventEmitter<string | number>;
+  @Output()
+  public toggle: EventEmitter<string | number>
 
   constructor() {
     this.tasks = [];
     this.remove = new EventEmitter();
+    this.toggle = new EventEmitter();
   }
 
   ngOnInit() {
@@ -24,6 +27,9 @@ export class ListTasksComponent implements OnInit {
 
   public removeTask(id: string | number): void {
     this.remove.emit(id);
+  }
+  public toggleTask(id: string | number): void {
+    this.toggle.emit(id);
   }
 
 }

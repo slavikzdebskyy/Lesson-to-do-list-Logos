@@ -23,12 +23,36 @@ export class ToDoListComponent implements OnInit {
       id: 3,
       title: 'Do something else',
       isDone: false,
+    },
+    {
+      id: 4,
+      title: 'Do something 123',
+      isDone: false,
+    },
+    {
+      id: 5,
+      title: 'Do something qwerty',
+      isDone: false,
     }
   ];
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public removeTask(id: string | number): void {
+    this.tasks = this.tasks.filter((task: Task) => task.id !== id);
+  }
+  public toggleTask(id: string | number): void {
+   const index: number = this.tasks.findIndex(task => task.id === id);
+
+   if (index < 0) {
+      return;
+   }
+
+   this.tasks[index].isDone = !this.tasks[index].isDone;
+
   }
 
 }

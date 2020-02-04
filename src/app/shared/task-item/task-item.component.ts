@@ -13,16 +13,19 @@ export class TaskItemComponent implements OnInit {
 
   @Output()
   private remove: EventEmitter<string | number>;
+  @Output()
+  private toggle: EventEmitter<string | number>;
 
   constructor() {
     this.remove = new EventEmitter();
+    this.toggle = new EventEmitter();
    }
 
   ngOnInit() {
   }
 
   public toggleDone() {
-    this.task.isDone = !this.task.isDone;
+    this.toggle.emit(this.task.id);
   }
 
   public removeTask() {
