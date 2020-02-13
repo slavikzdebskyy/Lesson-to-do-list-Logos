@@ -1,9 +1,7 @@
 <div class="list-tsks">
   <app-task-item
     *ngFor="let task of tasks"
-    [task]="task"
-    (remove)="removeTask($event)"
-    (toggle)="toggleTask($event)">
+    [task]="task">
   </app-task-item
     >
 </div>

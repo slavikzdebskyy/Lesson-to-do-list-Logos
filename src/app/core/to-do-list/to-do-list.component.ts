@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Task } from 'src/app/interfaces/task.interface';
+import {Component, OnInit} from '@angular/core';
+import {Task} from 'src/app/interfaces/task.interface';
+import {RodosService} from '../../services/rodos.service';
+import {ActivatedRoute, Route, Router} from '@angular/router';
+
+const user = 'Petro';
 
 @Component({
   selector: 'app-to-do-list',
@@ -8,51 +12,26 @@ import { Task } from 'src/app/interfaces/task.interface';
 })
 export class ToDoListComponent implements OnInit {
 
-  public tasks: Task[] = [
-    {
-      id: 1,
-      title: 'Do something',
-      isDone: false,
-    },
-    {
-      id: 2,
-      title: 'Do nothing',
-      isDone: false,
-    },
-    {
-      id: 3,
-      title: 'Do something else',
-      isDone: false,
-    },
-    {
-      id: 4,
-      title: 'Do something 123',
-      isDone: false,
-    },
-    {
-      id: 5,
-      title: 'Do something qwerty',
-      isDone: false,
-    }
-  ];
+  public tasks: Task[];
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(
+    private todoService: RodosService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
+    this.todoService.tasks$.subscribe(
+      (next: Task[]) => {
+        this.tasks = next;
+      });
   }
 
-  public removeTask(id: string | number): void {
-    this.tasks = this.tasks.filter((task: Task) => task.id !== id);
-  }
-  public toggleTask(id: string | number): void {
-   const index: number = this.tasks.findIndex(task => task.id === id);
 
-   if (index < 0) {
-      return;
-   }
 
-   this.tasks[index].isDone = !this.tasks[index].isDone;
 
-  }
+ngOnInit() {
+  console.log(user);
+
+
+}
 
 }

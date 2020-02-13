@@ -1,35 +1,44 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Task } from 'src/app/interfaces/task.interface';
+import {Component, OnInit, Input, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Task} from 'src/app/interfaces/task.interface';
+import {RodosService} from '../../services/rodos.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-task-item',
   templateUrl: './task-item.component.html',
-  styleUrls: ['./task-item.component.scss']
+  styleUrls: ['./task-item.component.scss'],
+  // providers: [],
 })
-export class TaskItemComponent implements OnInit {
+export class TaskItemComponent implements OnInit, OnDestroy {
 
   @Input()
   public task: Task;
 
-  @Output()
-  private remove: EventEmitter<string | number>;
-  @Output()
-  private toggle: EventEmitter<string | number>;
-
-  constructor() {
-    this.remove = new EventEmitter();
-    this.toggle = new EventEmitter();
-   }
+  constructor(
+    private totoService: RodosService,
+    private router: Router
+  ) {
+    // console.log('This is Constructor');
+  }
 
   ngOnInit() {
+    // console.log('This is ngOnInit');
+  }
+
+  ngOnDestroy() {
+    // console.log('This is ngOnDestroy');
   }
 
   public toggleDone() {
-    this.toggle.emit(this.task.id);
+    this.totoService.toggleTask(this.task.id);
   }
 
   public removeTask() {
-    this.remove.emit(this.task.id);
+    this.totoService.removeTask(this.task.id);
+  }
+
+  public redirect(): void {
+    this.router.navigate(['task', this.task.id])
   }
 
 }
